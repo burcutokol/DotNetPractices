@@ -1,9 +1,12 @@
-﻿using BookStoreWebApi.BookOperations.CreateBook;
+﻿using AutoMapper;
+using BookStoreWebApi.BookOperations.CreateBook;
 using BookStoreWebApi.BookOperations.DeleteBook;
 using BookStoreWebApi.BookOperations.GetBookDetail;
 using BookStoreWebApi.BookOperations.GetBooks;
 using BookStoreWebApi.BookOperations.UpdateBook;
 using BookStoreWebApi.DbOperations;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,16 +19,18 @@ namespace BookStoreWebApi.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
-        public BookController(BookStoreDbContext context)
+        private readonly IMapper _mapper;
+        public BookController(BookStoreDbContext context, IMapper mapper)
         {
             _dbContext = context;
+            _mapper = mapper;
         }
 
     
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksQuery q = new GetBooksQuery(_dbContext);
+            GetBooksQuery q = new GetBooksQuery(_dbContext, _mapper);
             var res = q.Handler();
             return Ok(res);
         }
@@ -35,8 +40,10 @@ namespace BookStoreWebApi.Controllers
             var book = new BookDetailViewModel();
             try
             {
-                GetBookDetailQuery getBookDetailQuery = new GetBookDetailQuery(_dbContext);
+                GetBookDetailQuery getBookDetailQuery = new GetBookDetailQuery(_dbContext, _mapper);
                 getBookDetailQuery.BookId = id;
+                GetBookDetailValidator validationRules = new GetBookDetailValidator();
+                validationRules.ValidateAndThrow(getBookDetailQuery);
                 book = getBookDetailQuery.Handler();
             }
             catch (Exception ex) 
@@ -46,27 +53,25 @@ namespace BookStoreWebApi.Controllers
             return Ok(book);
     
         }
-        //[HttpGet] //from query
-        //public Book Get([FromQuery] string id)
-        //{
-        //    /* There can be only one parameterless HttpGet in the code. Therefore, in order for this endpoint to function, the first endpoint should be disabled.s*/
-        //    var book = BookList.Where(x => x.Id == Convert.ToInt32(id)).SingleOrDefault();
-        //    return book;
-        //}
+     
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
+            CreateBookCommand createBookCommand = new CreateBookCommand(_dbContext, _mapper);
+            CreateBookCommandValidator validationRules = new CreateBookCommandValidator();
             try
             {
-                CreateBookCommand createBookCommand = new CreateBookCommand(_dbContext);
+                
                 createBookCommand.Model = newBook;
+                ValidationResult res =validationRules.Validate(createBookCommand);
+                validationRules.ValidateAndThrow(createBookCommand);
                 createBookCommand.Handler();
 
                 
             }
             catch (Exception ex) 
             {
-                
+                return BadRequest(ex.Message);
             }
             return Ok();
 
@@ -79,6 +84,8 @@ namespace BookStoreWebApi.Controllers
                 UpdateBookCommand updateBookCommand = new UpdateBookCommand(_dbContext);
                 updateBookCommand.BookId = id;
                 updateBookCommand.model = updatedBook;
+                UpdateBookCommandValidator validationRules = new UpdateBookCommandValidator();
+                validationRules.ValidateAndThrow(updateBookCommand);
                 updateBookCommand.Handler();
             }
             catch (Exception ex) 
@@ -95,6 +102,8 @@ namespace BookStoreWebApi.Controllers
             {
                 DeleteBookCommand deleteBookCommand = new DeleteBookCommand(_dbContext);
                 deleteBookCommand.BookId = id;
+                DeleteBookCommandValidator validationRules = new DeleteBookCommandValidator();  
+                validationRules.ValidateAndThrow(deleteBookCommand);
                 deleteBookCommand.Handler();
             }
             catch(Exception ex) 

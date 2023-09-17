@@ -36,7 +36,7 @@ namespace BookStoreWebApi.DbOperations
                {
                    //Id = 3,
                    Title = "1984",
-                   GenreId = 2, //roman
+                   GenreId = 2, //bilim kurgu
                    PageCount = 352,
                    PublishDate = new System.DateTime(1949, 08, 06),
                });

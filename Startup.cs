@@ -53,6 +53,7 @@ namespace BookStoreWebApi
 
             app.UseAuthorization();
             app.UseCustomExceptionMiddle();
+            app.UseLoggerMiddlewareExtension();
 
             app.UseEndpoints(endpoints =>
             {

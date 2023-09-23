@@ -1,19 +1,14 @@
 using BookStoreWebApi.DbOperations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using BookStoreWebApi.Middlewares;
+using BookStoreWebApi.Services;
 namespace BookStoreWebApi
 {
     public class Startup
@@ -37,6 +32,9 @@ namespace BookStoreWebApi
 
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName: "BookStoreDb "));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddScoped<IUserService, UserService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

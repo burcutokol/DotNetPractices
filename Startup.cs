@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using BookStoreWebApi.Middlewares;
 namespace BookStoreWebApi
 {
     public class Startup
@@ -52,6 +52,7 @@ namespace BookStoreWebApi
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCustomExceptionMiddle();
 
             app.UseEndpoints(endpoints =>
             {

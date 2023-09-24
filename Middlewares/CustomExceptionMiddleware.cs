@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BookStoreWebApi.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -11,9 +12,11 @@ namespace BookStoreWebApi.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        public CustomExceptionMiddleware(RequestDelegate next)
+        private readonly IUserService _userService;
+        public CustomExceptionMiddleware(RequestDelegate next, IUserService userService)
         {
             _next = next;
+            _userService = userService;
         }
         public async Task Invoke(HttpContext context)
         {
@@ -23,6 +26,7 @@ namespace BookStoreWebApi.Middlewares
                
                 string message = "[Request] HTTP " + context.Request.Method + " - " + context.Request.Path; //writes executed endpoint type and its path
                 Console.WriteLine(message);
+                _userService.GetUsers();
 
                 await _next(context); // executed called endpoint
                 watch.Stop(); //ended time process of called endpoint

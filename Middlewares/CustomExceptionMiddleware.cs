@@ -12,11 +12,11 @@ namespace BookStoreWebApi.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IUserService _userService;
-        public CustomExceptionMiddleware(RequestDelegate next, IUserService userService)
+        private readonly ILoggerService _logger;
+        public CustomExceptionMiddleware(RequestDelegate next, ILoggerService logger)
         {
             _next = next;
-            _userService = userService;
+            _logger = logger;
         }
         public async Task Invoke(HttpContext context)
         {
@@ -25,15 +25,15 @@ namespace BookStoreWebApi.Middlewares
             {
                
                 string message = "[Request] HTTP " + context.Request.Method + " - " + context.Request.Path; //writes executed endpoint type and its path
-                Console.WriteLine(message);
-                _userService.GetUsers();
+                _logger.Write(message);
+                
 
                 await _next(context); // executed called endpoint
                 watch.Stop(); //ended time process of called endpoint
 
                 message = "[Response] HTTP" + context.Request.Method + " - " + context.Request.Path +
                     " responded " + context.Response.StatusCode + " in " + watch.Elapsed.TotalSeconds;
-                Console.WriteLine(message);
+                _logger.Write(message);
             }
             catch (Exception ex) 
             {
@@ -49,7 +49,7 @@ namespace BookStoreWebApi.Middlewares
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             string message = "[Error]  HTTP " + context.Request.Method + " - " + context.Response.StatusCode + " Error Message " + ex.Message + " in " + watch.Elapsed.TotalMilliseconds;
-            Console.WriteLine(message);
+            _logger.Write(message);
 
             var res = JsonConvert.SerializeObject(new { error = ex.Message }, Formatting.None);
             return context.Response.WriteAsync(res);

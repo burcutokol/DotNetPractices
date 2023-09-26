@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStoreWebApi.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace BookStoreWebApi.DbOperations
 {
     public class BookStoreDbContext : DbContext
@@ -7,6 +8,7 @@ namespace BookStoreWebApi.DbOperations
         {
         }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Genre> Genres { get; set; }    
         
     }
 }

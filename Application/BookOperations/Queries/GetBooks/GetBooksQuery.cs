@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookStoreWebApi.Common;
 using BookStoreWebApi.DbOperations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace BookStoreWebApi.BookOperations.GetBooks
         }
         public List<BookViewModel> Handler()
         {
-            var bookList = _dbContext.Books.OrderBy(x => x.Id).ToList();
+            var bookList = _dbContext.Books.Include(x => x.Genre).OrderBy(x => x.Id).ToList(); //Books içinde bulunan
+                                                                                               //Genre entitysi include edildi.
             List<BookViewModel> vm = _mapper.Map<List<BookViewModel>>(bookList);
  
             return vm;

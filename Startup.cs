@@ -33,7 +33,8 @@ namespace BookStoreWebApi
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName: "BookStoreDb "));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<ILoggerService, ConsoleLogger>();
+
             
         }
 

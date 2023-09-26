@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStoreWebApi.DbOperations;
+using BookStoreWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Globalization;

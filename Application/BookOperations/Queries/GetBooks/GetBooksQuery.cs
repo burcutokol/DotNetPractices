@@ -19,7 +19,7 @@ namespace BookStoreWebApi.BookOperations.GetBooks
         }
         public List<BookViewModel> Handler()
         {
-            var bookList = _dbContext.Books.Include(x => x.Genre).OrderBy(x => x.Id).ToList(); //Books içinde bulunan
+            var bookList = _dbContext.Books.Include(x => x.Genre).Include(x => x.Author).OrderBy(x => x.Id).ToList(); //Books içinde bulunan
                                                                                                //Genre entitysi include edildi.
             List<BookViewModel> vm = _mapper.Map<List<BookViewModel>>(bookList);
  
@@ -32,6 +32,8 @@ namespace BookStoreWebApi.BookOperations.GetBooks
         public DateTime PublishDate { get; set; }
         public int PageCount { get; set; }
 
+        public string AuthorName { get; set; }
+        public string AuthorSurname { get; set; }
         public string Genre { get; set; }
     }
 }

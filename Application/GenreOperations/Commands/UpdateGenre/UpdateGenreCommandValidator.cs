@@ -6,6 +6,7 @@ namespace BookStoreWebApi.Application.GenreOperations.Commands.UpdateGenre
     {
         public UpdateGenreCommandValidator() 
         {
+            RuleFor(c => c.GenreId).NotEmpty().GreaterThan(0);
             RuleFor(command => command.model.Name).MinimumLength(4).When(x => x.model.Name.Trim() != string.Empty); //when model name is not null,
                                                                                                                     //model name contains at least 4 chars.
                                                                                                                     //if model name is null, it controls on handler.

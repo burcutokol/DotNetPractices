@@ -38,7 +38,8 @@ namespace BookStoreWebApi.DbOperations
                         Title = "Kürk Mantolu Madonna",
                         GenreId = 1, //roman
                         PageCount = 177,
-                        PublishDate = new System.DateTime(1943, 01, 01),
+                        PublishDate = new DateTime(1943, 01, 01),
+                        AuthorId = 1,
                     },
                    new Book
                    {
@@ -46,7 +47,8 @@ namespace BookStoreWebApi.DbOperations
                        Title = "Ben, Robot",
                        GenreId = 2, //bilim kurgu
                        PageCount = 240,
-                       PublishDate = new System.DateTime(1950, 02, 1),
+                       PublishDate = new DateTime(1950, 02, 1),
+                       AuthorId = 2,
                    },
                    new Book
                    {
@@ -54,8 +56,31 @@ namespace BookStoreWebApi.DbOperations
                        Title = "1984",
                        GenreId = 2, //bilim kurgu
                        PageCount = 352,
-                       PublishDate = new System.DateTime(1949, 08, 06),
+                       PublishDate = new DateTime(1949, 08, 06),
+                       AuthorId = 3,
                    });
+
+                context.AddRange(
+                    new Author
+                    {
+                        Name = "Sabahattin",
+                        Surname = "Ali",
+                        BirthDate = new DateTime(1907, 02, 25),
+
+                    },
+                    new Author
+                    {
+                        Name = "Isaac",
+                        Surname = "Asimov",
+                        BirthDate = new DateTime(1920, 01, 02)
+                    },
+                    new Author
+                    {
+                        Name = "George",
+                        Surname  = "Orwell",
+                        BirthDate = new DateTime(1903, 06 , 25),
+                    }
+                    );
 
                 context.SaveChanges();
             }

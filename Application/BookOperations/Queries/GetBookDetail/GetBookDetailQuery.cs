@@ -19,7 +19,7 @@ namespace BookStoreWebApi.BookOperations.GetBookDetail
         } 
         public BookDetailViewModel Handler()
         {
-            var book = _dbContext.Books.Include(x => x.Genre).Where(x => x.Id == BookId).SingleOrDefault();
+            var book = _dbContext.Books.Include(x => x.Genre).Include(x => x.Author).Where(x => x.Id == BookId).SingleOrDefault();
             if (book == null)
                 throw new InvalidOperationException("Bu id'ye sahip kitap yok.");
             BookDetailViewModel viewModel = _mapper.Map<BookDetailViewModel>(book);
@@ -32,7 +32,8 @@ namespace BookStoreWebApi.BookOperations.GetBookDetail
         public string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public int PageCount { get; set; }
-
+        public string AuthorName { get; set; }
+        public string AuthorSurname { get; set; }
         public string Genre { get; set; }
     }
 }

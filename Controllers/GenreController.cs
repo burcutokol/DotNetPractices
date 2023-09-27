@@ -16,9 +16,9 @@ namespace BookStoreWebApi.Controllers
     [ApiController]
     public class GenreController : ControllerBase
     {
-        private readonly BookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
+        private readonly IBookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
         private readonly IMapper _mapper;
-        public GenreController(BookStoreDbContext context, IMapper mapper)
+        public GenreController(IBookStoreDbContext context, IMapper mapper)
         {
             _dbContext = context;
             _mapper = mapper;

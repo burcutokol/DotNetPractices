@@ -18,7 +18,7 @@ namespace BookStoreWebApi.Controllers
     [Route("[controller]s")]
     public class BookController : ControllerBase
     {
-        private readonly BookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
+        private readonly IBookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
         private readonly IMapper _mapper;
         public BookController(BookStoreDbContext context, IMapper mapper)
         {

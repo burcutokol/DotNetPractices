@@ -16,9 +16,9 @@ namespace BookStoreWebApi.Controllers
     [ApiController]
     public class AuthorController : ControllerBase
     {
-        private readonly BookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
+        private readonly IBookStoreDbContext _dbContext; //sadece contstructorda set edilebilir.
         private readonly IMapper _mapper;
-        public AuthorController(BookStoreDbContext dbContext, IMapper mapper) 
+        public AuthorController(IBookStoreDbContext dbContext, IMapper mapper) 
         {
             _dbContext = dbContext;
             _mapper = mapper;

@@ -11,9 +11,9 @@ namespace BookStoreWebApi.Application.AuthorOperations.Commands.CreateAuthor
     public class CreateAuthorCommand
     {
         public CreateAuthorModel Model;
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _dbContext;
         private readonly IMapper _mapper;
-        public CreateAuthorCommand(BookStoreDbContext dbContext, IMapper mapper) 
+        public CreateAuthorCommand(IBookStoreDbContext dbContext, IMapper mapper) 
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace BookStoreWebApi.Application.AuthorOperations.Commands.CreateAuthor
             }
             Author = _mapper.Map<Author>(Model);
 
-            _dbContext.Add(Author);
+            _dbContext.Authors.Add(Author);
             _dbContext.SaveChanges();
 
         }

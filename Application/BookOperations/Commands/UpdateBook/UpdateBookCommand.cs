@@ -6,10 +6,10 @@ namespace BookStoreWebApi.BookOperations.UpdateBook
 {
     public class UpdateBookCommand
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _dbContext;
         public int BookId { get; set; }
         public UpdateBookViewModel model { get; set; }
-        public UpdateBookCommand(BookStoreDbContext dbContext)
+        public UpdateBookCommand(IBookStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }

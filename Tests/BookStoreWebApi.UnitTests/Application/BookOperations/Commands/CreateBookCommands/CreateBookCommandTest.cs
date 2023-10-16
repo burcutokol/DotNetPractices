@@ -38,7 +38,7 @@ namespace BookStoreWebApi.UnitTests.Application.BookOperations.Commands.CreateCo
             FluentActions
                 .Invoking(() => command.Handler()) //testte çalışması gereken metot
                 .Should().Throw<InvalidOperationException>()
-                .And.Message.Should().Be("Kitap zaten mevcut");
+                .And.Message.Should().Be("Kitap türü zaten mecvut");
         }
         [Fact]
         public void WhenValidInputIsGiven_Book_ShouldNotBeCreated() //happy path

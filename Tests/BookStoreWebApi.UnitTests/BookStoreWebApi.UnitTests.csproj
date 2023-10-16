@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\BookStoreWebApi\BookStoreWebApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\GenreOperations\Commands\Queries\" />
+  </ItemGroup>
+
 </Project>

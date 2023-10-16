@@ -68,9 +68,9 @@ namespace BookStoreWebApi.UnitTests.Application.BookOperations.Commands.CreateBo
             CreateBookCommand command = new CreateBookCommand(null, null);
             command.Model = new CreateBookModel()
             {
-                Title = "lord of the ring",//sadece datimeda kırılmalı. diğer caseler diğer testte 
+                Title = "lord of the ring",
                 PageCount = 100,
-                PublishDate = DateTime.Now.Date.AddYears(-2), //hata versin diye
+                PublishDate = DateTime.Now.Date.AddYears(-2), 
                 GenreId = 1,
                 AuthorId= 1,
             };

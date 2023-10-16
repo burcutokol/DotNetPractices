@@ -60,7 +60,7 @@ namespace BookStoreWebApi.DbOperations
                        AuthorId = 3,
                    });
 
-                context.AddRange(
+                context.Authors.AddRange(
                     new Author
                     {
                         Name = "Sabahattin",

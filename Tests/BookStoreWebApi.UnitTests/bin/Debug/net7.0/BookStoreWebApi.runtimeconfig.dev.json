@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\tokol\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\tokol\\.nuget\\packages"
+    ]
+  }
+}
